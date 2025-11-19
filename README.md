@@ -1,1 +1,1 @@
-# football-players-tracking
+# Interpreting Player Dynamics with Computer Vision for Tactical Soccer Analysis
