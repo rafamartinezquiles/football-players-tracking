@@ -1,1 +1,1 @@
-# Interpreting Player Dynamics with Computer Vision for Tactical Soccer Analysi
+# Interpreting Player Dynamics with Computer Vision for Tactical Soccer Analysis
