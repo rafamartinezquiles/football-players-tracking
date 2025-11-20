@@ -25,8 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent
 
 # Default path to the main sample video used in the examples.
 # You can change this to point to other videos.
-DEFAULT_VIDEO_PATH = str(BASE_DIR / ".." / "0bfacc_0.mp4")
-ALT_VIDEO_PATH = str(BASE_DIR / ".." / "121364_0.mp4")
+DEFAULT_VIDEO_PATH = str(BASE_DIR / ".." / "videos" / "0bfacc_0.mp4")
+ALT_VIDEO_PATH = str(BASE_DIR / ".." / "videos" / "121364_0.mp4")
 
 # For convenience, choose one as the source for demos
 SOURCE_VIDEO_PATH = ALT_VIDEO_PATH
