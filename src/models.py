@@ -28,7 +28,7 @@ from config import (
     SIGLIP_MODEL_NAME,
     DEFAULT_TORCH_DEVICE,
 )
-from secrets import load_api_keys
+from project_secrets import load_api_keys
 
 
 def init_roboflow_models():
