@@ -138,7 +138,7 @@ def demo_radar_and_voronoi():
     team_classifier = build_team_classifier(
         video_path=SOURCE_VIDEO_PATH,
         detection_model=player_model,
-        device="cuda",
+        device="cpu",
         stride=30,
     )
 
