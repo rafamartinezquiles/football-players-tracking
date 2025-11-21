@@ -57,24 +57,27 @@ def detect_pitch_keypoints(
 def filter_keypoints_by_confidence(
     key_points: sv.KeyPoints,
     threshold: float = 0.5,
-) -> np.ndarray:
+) -> tuple[np.ndarray, np.ndarray]:
     """
     Filter pitch keypoints by confidence.
 
     Args:
-        key_points: KeyPoints object.
+        key_points: KeyPoints object from the field model.
         threshold:  Minimum confidence to keep.
 
     Returns:
-        frame_reference_points: Numpy array of shape (K, 2) with high-confidence points.
+        frame_reference_points: (K, 2) high-confidence points in the frame.
+        mask:                    (N,) boolean mask over all vertices indicating
+                                 which vertex indices were kept.
     """
     mask = key_points.confidence[0] > threshold
     frame_reference_points = key_points.xy[0][mask]
-    return frame_reference_points
+    return frame_reference_points, mask
 
 
 def get_view_transformer_frame_to_pitch(
     frame_reference_points: np.ndarray,
+    vertex_mask: np.ndarray,
     config: SoccerPitchConfiguration,
 ) -> ViewTransformer:
     """
@@ -82,22 +85,24 @@ def get_view_transformer_frame_to_pitch(
 
     The mapping is based on pairs of reference points:
     - `frame_reference_points` in the image plane.
-    - Corresponding vertices from the `config`.
+    - Corresponding vertices from the `config`, selected with the same mask.
 
     Args:
-        frame_reference_points: High-confidence keypoints in the frame.
+        frame_reference_points: (K, 2) high-confidence keypoints in the frame.
+        vertex_mask:            (N,) boolean mask over CONFIG.vertices.
         config:                 SoccerPitchConfiguration instance.
 
     Returns:
         ViewTransformer instance where source=frame, target=pitch.
     """
-    pitch_reference_points = np.array(config.vertices)[ : frame_reference_points.shape[0] ]
+    pitch_vertices = np.array(config.vertices)
+    pitch_reference_points = pitch_vertices[vertex_mask]
+
     transformer = ViewTransformer(
         source=frame_reference_points,
         target=pitch_reference_points,
     )
     return transformer
-
 
 def project_entities_to_pitch(
     ball_detections: sv.Detections,
