@@ -68,6 +68,8 @@ from pitch import (
 )
 from ball_tracking import compute_and_draw_clean_ball_path
 from sports.configs.soccer import SoccerPitchConfiguration
+from sports.annotators.soccer import draw_pitch
+
 
 
 def demo_single_frame_detection():
@@ -185,13 +187,14 @@ def demo_radar_and_voronoi():
 
     # Pitch keypoints and homography
     key_points = detect_pitch_keypoints(frame=frame, field_model=field_model, confidence=0.3)
-    frame_ref_points = filter_keypoints_by_confidence(key_points, threshold=0.5)
+    frame_ref_points, vertex_mask = filter_keypoints_by_confidence(key_points, threshold=0.5)
 
     if frame_ref_points.shape[0] < 4:
         raise RuntimeError("Not enough pitch keypoints for homography.")
 
     transformer = get_view_transformer_frame_to_pitch(
         frame_reference_points=frame_ref_points,
+        vertex_mask=vertex_mask,
         config=config,
     )
 
