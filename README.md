@@ -47,3 +47,38 @@ README.md
 requirements.txt
 LICENSE
 ```
+
+## Getting started
+
+### Resources used
+A high-performance Acer Nitro 5 laptop, powered by an Intel Core i7 processor and an NVIDIA GeForce GTX 1650 GPU (4 GB VRAM), was used for model training and evaluation. Due to the large size of the dataset, the training process was computationally demanding and prolonged. Nevertheless, this hardware configuration provided a stable and efficient environment, enabling consistent experimentation and reliable validation of the gesture-recognition models.
+
+### Installing
+The project is deployed in a local machine, so you need to install the next software and dependencies to start working:
+
+1. Create and activate the new virtual environment for the project
+
+```bash
+conda create --name football_ai python=3.11
+conda activate football_ai
+```
+
+2. Clone repository
+
+```bash
+git clone https://github.com/rafamartinezquiles/football-players-tracking.git
+```
+
+3. In the same folder that the requirements are, install the necessary requirements
+
+```bash
+cd football-players-tracking
+pip install -r requirements.txt
+```
+
+4. In addition to installing the required packages, you must set up the API keys needed to access HuggingFace models and Roboflow. Create an account on each platform and generate your API keys. Note: for HuggingFace, a read-only token is sufficient. Once you have both keys, set them in your environment. On Windows (Command Prompt), run:
+
+```bash
+set HF_TOKEN=api_key
+set ROBOFLOW_API_KEY=api_key
+```
