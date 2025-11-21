@@ -87,19 +87,20 @@ def compute_ball_path_raw(
             field_model=field_model,
             confidence=confidence,
         )
-        frame_reference_points = filter_keypoints_by_confidence(key_points, threshold=0.5)
+        frame_reference_points, vertex_mask = filter_keypoints_by_confidence(key_points, threshold=0.5)
 
         if frame_reference_points.shape[0] < 4:
-            # Not enough keypoints to compute a reliable homography
             path_raw.append(np.empty((0, 2), dtype=np.float32))
             continue
 
-        # Build a homography from frame to pitch
-        pitch_reference_points = np.array(config.vertices)[: frame_reference_points.shape[0]]
+        pitch_vertices = np.array(config.vertices)
+        pitch_reference_points = pitch_vertices[vertex_mask]
+
         transformer = ViewTransformer(
             source=frame_reference_points,
             target=pitch_reference_points,
         )
+
 
         homography_history.append(transformer.m)
         transformer.m = np.mean(np.array(homography_history), axis=0)
