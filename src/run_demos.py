@@ -68,8 +68,11 @@ from pitch import (
 )
 from ball_tracking import compute_and_draw_clean_ball_path
 from sports.configs.soccer import SoccerPitchConfiguration
-from sports.annotators.soccer import draw_pitch
-
+from sports.annotators.soccer import (
+    draw_pitch,
+    draw_points_on_pitch,
+    draw_pitch_voronoi_diagram
+)
 
 
 def demo_single_frame_detection():
